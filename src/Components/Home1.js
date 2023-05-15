@@ -9,7 +9,6 @@ import Section4 from "./section4/Section4";
 function Home1() {
   return (
     <div>
-      <Nav/>
       <Section0 />
       {/* <Section1 />
       <Section2 />

@@ -231,7 +231,7 @@ const Detail = () => {
     <div className="detail">
       <p>{message}</p>
       <h3 className="back">
-        <a className="top" href="http://localhost:3000/"><FaHome />HOME</a>
+        <a className="top" href="http://localhost:3000/Home2"><FaHome />HOME</a>
       </h3>
       <div id="parent">
         <div id="title1">

@@ -20,7 +20,7 @@ const Nav = () => {
         <nav className = "menu-bar">
             <div className = "index">
                 <div className = "img">
-                    <a className="top" href="http://localhost:3000/">
+                    <a className="top" href="http://localhost:3000/Home2">
                         <img className="porfile-img" src ={logo} alt="profile"/>
                     </a>
                 </div>
