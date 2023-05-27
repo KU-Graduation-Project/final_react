@@ -1,8 +1,8 @@
 import React from "react";
-import url from './url.png';
+import url from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Images/url.png';
 import Nav from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Components/nav/Nav';
 import { FaHome } from 'react-icons/fa';
-
+import { Link } from "react-router-dom";
 
 const Section4 = () => {
     return (
@@ -10,7 +10,11 @@ const Section4 = () => {
             <Nav/>
             <div className="section">
             <a name="target4"></a>
-            <h3 className="back"><a className="top" href="http://localhost:3000/Home2"><FaHome />HOME</a></h3>
+            <h3 className="back">
+                <Link to={"/Home2"}>
+                    <FaHome />HOME
+                </Link>
+            </h3>
             <p className="major"><span>THE LATEST NEWS</span></p>
             <br/>
             <div className="article">

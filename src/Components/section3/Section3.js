@@ -1,7 +1,7 @@
 import React from "react";
 import Nav from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Components/nav/Nav';
 import { FaHome } from 'react-icons/fa';
-
+import { Link } from "react-router-dom";
 
 const Section3 = () => {
     return (
@@ -10,7 +10,11 @@ const Section3 = () => {
 			<div className="section">
 				<div className="education">
 				<a name="target3"></a>
-				<h3 className="back"><a className="top" href="http://localhost:3000/Home2"><FaHome />HOME</a></h3>
+				<h3 className="back">
+					<Link to={"/Home2"}>
+						<FaHome />HOME
+					</Link>
+				</h3>
 				<p className="major"><span>How to Get In Touch?</span></p>
 				<div className="contacts">
 					<br/>

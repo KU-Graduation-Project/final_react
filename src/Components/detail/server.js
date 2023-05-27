@@ -1,42 +1,32 @@
-// import WebSocket, { WebSocketServer } from "ws";
-// const { Server } = require('http');
-
-// const WebSocket = require('ws');
-// const wss = new WebSocket.Server({ port:8080 });
-
-// let data = '';
-
-// wss.on('connection', ws => {
-//     ws.on("message", function message(data, isBinary) {
-//         const msg = isBinary ? data : data.toString();
-//         console.log("msg"+msg + "\n\n");
-
-//         // ws.send("send to client: echo ", JSON.parse(msg)) // python 으로 데이터 보낸다, python에서 data 변수에 들어감
-//         console.log("receive from client: ", msg)
-//         ws.send("send to client: echo " + msg)
-
-//         data = msg;
-//         wss.clients.forEach((client) => {
-//             if (client.readyState === WebSocket.OPEN) {
-//                 client.send(data);
-//             }
-//         })
-//         // wss.clients.forEach((client) => {
-//         //     if (client.readyState === WebSocket.OPEN) {
-//         //         client.send(data);
-//         //     }
-//         // })
-//       });
-
-//     ws.on('close', ()=> {
-//         console.log('disconnected');
-//     });
-
-// });
-
 const express = require('express');
 const mysql = require('mysql');
+const WebSocket = require('ws');
+
 const app = express();
+const wss = new WebSocket.Server({ port: 8080 });
+
+let data = '';
+
+wss.on('connection', ws => {
+  ws.on("message", function message(data, isBinary) {
+    const msg = isBinary ? data : data.toString();
+    console.log("msg" + msg + "\n\n");
+
+    console.log("receive from client: ", msg);
+    ws.send("send to client: echo " + msg);
+
+    data = msg;
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(data);
+      }
+    });
+  });
+
+  ws.on('close', () => {
+    console.log('disconnected');
+  });
+});
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -50,10 +40,9 @@ connection.connect((err) => {
   console.log('Connected to the MySQL database');
 });
 
-
 connection.on('close', () => {
   const deleteQuery = 'DELETE FROM user';
-  
+
   connection.query(deleteQuery, (err, result) => {
     if (err) {
       console.error('Error deleting data from MySQL database', err);
@@ -82,19 +71,9 @@ app.post('/api/enroll', (req, res) => {
   });
 });
 
-// process.on('exit', () => {
-//   const deleteQuery = 'DELETE FROM user';
-
-//   connection.query(deleteQuery, (err, result) => {
-//     if (err) {
-//       console.error('Error deleting data from MySQL database', err);
-//     } else {
-//       console.log('Data deleted from MySQL database');
-//     }
-//     // 연결 종료
-//     connection.end();
-//   });
-// });
+app.get('/Home2', (req, res) => {
+  res.send('Welcome to the home page');
+});
 
 // 서버 시작
 app.listen(3000, () => {

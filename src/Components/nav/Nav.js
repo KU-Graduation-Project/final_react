@@ -1,5 +1,5 @@
 import React from "react";
-import logo from './logo.png';
+import logo from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Images/logo.png';
 import { Link, Navigate } from "react-router-dom";
 
 const onClickSection1 = () => {
@@ -20,9 +20,9 @@ const Nav = () => {
         <nav className = "menu-bar">
             <div className = "index">
                 <div className = "img">
-                    <a className="top" href="http://localhost:3000/Home2">
-                        <img className="porfile-img" src ={logo} alt="profile"/>
-                    </a>
+                    <Link to={"/Home2"}>
+                        <img className="porfile-img" src = {logo}/>
+                    </Link>
                 </div>
                 <br/>
                 {/* <Link to={"/section2"}>

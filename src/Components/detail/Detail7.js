@@ -5,6 +5,7 @@ import WebSocket, {WebSocketServer} from "ws";
 import ApexChart from 'apexcharts'
 import ReactApexChart from 'react-apexcharts'
 import { FaHome, FaChild, FaHeartbeat, FaWind, FaTemperatureHigh } from 'react-icons/fa';
+import { Link, Navigate } from "react-router-dom";
 
 let user1_hr = 0;
 let user1_rp = 0;
@@ -231,7 +232,9 @@ const Detail = () => {
     <div className="detail">
       <p>{message}</p>
       <h3 className="back">
-        <a className="top" href="http://localhost:3000/Home2"><FaHome />HOME</a>
+        <Link to={"/Home2"}>
+          <FaHome />HOME
+        </Link>
       </h3>
       <div id="parent">
         <div id="title1">

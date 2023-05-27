@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import './section0.css';
 import axios from 'axios';
 import { useNavigate  } from 'react-router-dom'; // React Router의 useHistory 사용
+import { FaHome } from 'react-icons/fa';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 const Section0 = () => {
-  const navigate  = useNavigate(); // navigate 훅 사용
+  const navigate = useNavigate(); // navigate 훅 사용
 
   const [infoList, setInfoList] = useState([]);
   const [info0, setInfo0] = useState('');
@@ -45,34 +47,32 @@ const Section0 = () => {
   };
 
   const handleEnroll = (event) => {
-    if(infoList.length>0){
-      const confirmation = window.confirm('등록하시겠습니까?');
-      if(confirmation){
-        const did = infoList.map((info) => info.info0);
-        const uid = infoList.map((info) => info.info1);
-        const name = infoList.map((info) => info.info2);
-        
-        const data = { did, uid, name };
+    const confirmation = window.confirm('등록하시겠습니까?');
+    if(confirmation){
+      const did = infoList.map((info) => info.info0);
+      const uid = infoList.map((info) => info.info1);
+      const name = infoList.map((info) => info.info2);
 
-        axios.post('/api/enroll', data)
-          .then((response) => {
-            // 등록 후 작업 수행
-            // res.redirect('/Home2');
-            // window.location.href = "http://localhost:3000/Home2";
-            console.log('Enrollment successful');
-            console.log(response.data); // 서버로부터 받은 응답 데이터 출력
-            navigate('/Home2'); // 리디렉션을 위해 history.push 사용
-          })
-          .catch((error) => {
-            console.error('Error while enrolling data', error);
-            // 에러 처리
-          });
-      }    
-    }
+      const data = { did, uid, name };
+
+      axios.post('/api/enroll', data)
+        .then((response) => {
+          // 등록 후 작업 수행
+          alert("데이터가 등록되었습니다.");
+          console.log('Enrollment successful');
+          console.log(response.data); // 서버로부터 받은 응답 데이터 출력
+          navigate("/Home2");
+        })
+        .catch((error) => {
+          console.error('Error while enrolling data', error); // 에러 처리
+        });
+    }                          
     else{
       alert("해당 정보를 모두 저장해주세요");
     }
   };
+
+  
 
   const handleEdit = (index) => {
     const { info0, info1, info2 } = infoList[index];
@@ -100,7 +100,8 @@ const Section0 = () => {
                 <input className="input-field" placeholder='User ID' type="text" value={info1} onChange={handleInfo1Change} />
                 <input className="input-field" placeholder='User Name' type="text" value={info2} onChange={handleInfo2Change} />
                 <button onClick={handleSave} className="save-button">{editIndex !== -1 ? 'Update' : 'Save'}</button>
-                <button onClick={handleEnroll} className="enroll-button">{editIndex !== -1 ? 'Update' : 'Enroll'}</button>
+                <button onClick={handleEnroll} className="enroll-button">{editIndex !== -1 ? 'Enroll' : 'Enroll'}</button>
+                {/* <a className="top" href="http://localhost:3000/Home2"><FaHome />HOME</a> */}
             </div>
         </div>
       <ul className="info-list">

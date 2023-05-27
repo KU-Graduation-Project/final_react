@@ -5,6 +5,7 @@ import WebSocket, {WebSocketServer} from "ws";
 import ApexChart from 'apexcharts'
 import ReactApexChart from 'react-apexcharts'
 import { FaHome, FaChild, FaHeartbeat, FaWind, FaTemperatureHigh } from 'react-icons/fa';
+import { Link, Navigate } from "react-router-dom";
 
 let user1_hr = 0;
 let user1_rp = 0;
@@ -36,14 +37,6 @@ const Detail = () => {
     
     socket.onmessage = (event) => {
       setMessage(event.data);
-      // let parse_data = JSON.parse(event.data)
-      // let hr = parse_data.heartrate
-      // let rp = parse_data.resp
-      // let tp = parse_data.temp
-      // console.log(parse_data)
-
-    
-      // console.log(event)
       const arr1 = event.data.split(",")
       const timestamp = arr1[0]
       const batteryLv = arr1[2]
@@ -231,7 +224,9 @@ const Detail = () => {
     <div className="detail">
       <p>{message}</p>
       <h3 className="back">
-        <a className="top" href="http://localhost:3000/Home2"><FaHome />HOME</a>
+        <Link to={"/Home2"}>
+          <FaHome />HOME
+        </Link>
       </h3>
       <div id="parent">
         <div id="title1">
