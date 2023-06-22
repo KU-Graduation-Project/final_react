@@ -1,6 +1,7 @@
 import React from "react";
 import logo from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Images/logo.png';
 import { Link, Navigate } from "react-router-dom";
+import { FaHome } from 'react-icons/fa';
 
 const onClickSection1 = () => {
     return <Navigate to="/Section1" />;
@@ -19,12 +20,9 @@ const Nav = () => {
     return (
         <nav className = "menu-bar">
             <div className = "index">
-                <div className = "img">
-                    <Link to={"/Home2"}>
-                        <img className="porfile-img" src = {logo}/>
-                    </Link>
-                </div>
-                <br/>
+                <Link to={"/Home2"}>
+                <h3 className="click" onClick={onClickSection2}><FaHome />HOME</h3>                  
+                </Link>
                 {/* <Link to={"/section2"}>
                     <h3 className="click" onClick={onClickSection2}>MEMBER</h3>
                 </Link> */}

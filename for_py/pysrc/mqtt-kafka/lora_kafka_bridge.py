@@ -1,88 +1,73 @@
 import json
-import threading
-import time
-from datetime import datetime
-import socket
-
-import serial
-import struct
-
-import json
 import multiprocessing
+from asyncio.log import logger
 
-from kafka import KafkaProducer
-import paho.mqtt.client as mqtt
-import time
+import pymysql
+from kafka import KafkaConsumer
 
-
-# ioLory receiver(COM5)
-# Making serial port
-# port_name : Using port name
-def make_port(port_name):
-    ser = serial.Serial(
-        port=port_name,
-        baudrate=9600,
-        parity=serial.PARITY_NONE,
-        stopbits=serial.STOPBITS_TWO,
-        bytesize=serial.EIGHTBITS,
-        timeout=0.05
-    )
-    ser.isOpen()
-    print('receiver open')
-
-    return ser
-
-
-# Running Port
-serial_port = make_port('COM4')
-tick = 1
-count = 10
-
-# Receiving Data, Thread 1, this function read byte data from serial port and save in datalist
-# ser : serial port
-# datalist : global memory for sharing data with other threads
-
-def receive_data(serial_port):
-    now = datetime.now()
-    timestamp = now.strftime('%Y-%m-%d %H:%M:%S')
-
-    if serial_port.readable():
-        data = serial_port.readline().decode('utf-8')
-        print(data)
-        if len(data)>3:
-        
-            strings = data.split(",")
-            topic = strings[9]
-        
-            print("receive data: ", timestamp, " / ", data)
-            kafka_producer = KafkaProducer(bootstrap_servers='localhost:9092',
-                                   value_serializer=lambda v: v.encode('utf-8'))
-
-            if kafka_producer.send(topic, data):
-                print('LoRa in KAFKA out - ' + str(data.encode('utf-8')) + ' to ' + topic)
-
-
-    return
-
-
-while True:
-    receive_data(serial_port)
-    time.sleep(0.1)
-
-def on_message(client, userdata, message):
-    m_in = str(message.payload.decode("utf-8", "ignore"))
-    strings = data.split(",")
-    topic = strings[9]
+"""user# 토픽에서 데이터 받아 db에 저장"""
 
 
 
+class MessageConsumer:
+    topic =""
 
-user_list = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+    def __init__(self, topic):
+        self.topic = topic
+        # DB연결
+        self.conn = pymysql.connect(host='127.0.0.1', user='root', password='password', db='motionDB', charset='utf8')
+        self.cur = self.conn.cursor()
+        sql = 'DROP TABLE IF EXISTS ' + self.topic
+        self.cur.execute(sql)
+
+        print(self.topic + " table created")
+        sql = 'CREATE TABLE ' + self.topic + ' (timestamp datetime PRIMARY KEY, ' \
+                                             'g_x int(3), g_y int(3), g_z int(3), ' \
+                                             'a_x int(3), a_y int(3), a_z int(3),' \
+                                             'heartrate int(3), resp int(3), temp int(3))'
+        self.cur.execute(sql)
+        self.conn.commit()
+
+        self.activate_listener()
+
+
+    def activate_listener(self):
+        consumer = KafkaConsumer(bootstrap_servers='localhost:9092',
+                                 group_id='team',
+                                 consumer_timeout_ms=60000,
+                                 auto_offset_reset='earliest',
+                                 enable_auto_commit=False,
+                                 #value_deserializer=lambda m: json.loads(m.decode('utf-8'))
+                                 )
+
+        consumer.subscribe(self.topic)
+        print(self.topic + ": consumer open")
+        try:
+            for message in consumer:
+                m_decode = str(message.value.decode("utf-8", "ignore"))
+                m_in = m_decode[:len(m_decode)]
+
+
+                m_json = json.loads(m_in)
+                timestamp = m_json["timestamp"]
+                g_x = str(m_json["data"])
+                sql = 'INSERT INTO ' + self.topic + ' (timestamp, g_x) VALUES (\''+timestamp+'\', '+g_x+');'
+                if self.cur.execute(sql):
+                    print(self.topic + " DB save : " + str(m_json))
+                # committing message manually after reading from the topic
+                self.conn.commit()
+                consumer.commit()
+
+        except Exception as e:
+            print(e)
+            logger.exception("failed to create %s", e)
+
+        finally:
+            consumer.close()
 
 
 if __name__ == '__main__':
-    # 컨슈머 멀티프로세싱
+    user_list = ["user1", "user2", "user3", "user4", "user5", "user6", "user7", "user8", "user9", "user10"]
+
     pool = multiprocessing.Pool(processes=10)
-    pool.map(connect, user_list)
-
-
+    pool.map(MessageConsumer, user_list)

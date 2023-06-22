@@ -21,9 +21,8 @@ let user7_hr=0, user7_rp=0, user7_tp = 0;
 let user8_hr=0, user8_rp=0, user8_tp = 0;
 let user9_hr=0, user9_rp=0, user9_tp = 0;
 
-const Section2 = () => {
-    const [message, setMessage] = useState('');
-
+const Section2 = ({ userIDs }) => {
+  const [message, setMessage] = useState('');
     const [imageSrc, setImageSrc] = useState(stand);
     const [actionState, setActionState] = useState(stand);
     const [imageSrc2, setImageSrc2] = useState(stand);
@@ -40,7 +39,7 @@ const Section2 = () => {
         setImageSrc(fall);
         // setActionState(fall)
       }else if(action==="-2"){ //run
-        setImageSrc(fall);
+        setImageSrc(run);
         // setActionState(stand)
       }else{ //stand
         setImageSrc(stand);
@@ -68,7 +67,7 @@ const Section2 = () => {
         if (action === '-3') {
           setImageSrc3(fall)
         }else if (action === '-2') {
-          setImageSrc3(stand)
+          setImageSrc3(run)
         }else{
           setImageSrc3(stand)
         }
@@ -76,7 +75,7 @@ const Section2 = () => {
         if (action === '-3') {
           setImageSrc4(fall)
         }else if (action === '-2') {
-          setImageSrc4(stand)
+          setImageSrc4(run)
         }else{
           setImageSrc4(stand)
         }
@@ -84,7 +83,7 @@ const Section2 = () => {
         if (action === '-3') {
           setImageSrc5(fall)
         }else if (action === '-2') {
-          setImageSrc5(stand)
+          setImageSrc5(run)
         }else{
           setImageSrc5(stand)
         }
@@ -92,7 +91,7 @@ const Section2 = () => {
         if (action === '-3') {
           setImageSrc6(fall)
         }else if (action === '-2') {
-          setImageSrc6(stand)
+          setImageSrc6(run)
         }else{
           setImageSrc6(stand)
         }
@@ -213,6 +212,7 @@ const Section2 = () => {
                     <div id="hr"><FaHeartbeat/> : {user1_hr}</div>
                     <div id="rp"><FaWind/> : {user1_rp}</div>
                     <div id="tp"><FaTemperatureHigh/> : {user1_tp}</div>
+                    <label>{userIDs[0]}</label>
                 </Link>              
                 </div>  
                 </div>
@@ -224,6 +224,7 @@ const Section2 = () => {
                     <div id="hr"><FaHeartbeat/> : {user2_hr} </div>
                     <div id="rp"><FaWind/> : {user2_rp} </div>
                     <div id="tp"><FaTemperatureHigh/> : {user2_tp} </div>
+                    <label>{userIDs[1]}</label>
                 </Link>              
                 </div>                 
                 </div>
@@ -235,6 +236,7 @@ const Section2 = () => {
                     <div id="hr"><FaHeartbeat/> : {user3_hr} </div>
                     <div id="rp"><FaWind/> : {user3_hr} </div>
                     <div id="tp"><FaTemperatureHigh/> : {user3_hr} </div>
+                    <label>{userIDs[2]}</label>
                 </Link>              
                 </div>                  
                 </div>

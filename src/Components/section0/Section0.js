@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import './section0.css';
 import axios from 'axios';
 import { useNavigate  } from 'react-router-dom'; // React Router의 useHistory 사용
-import { FaHome } from 'react-icons/fa';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-const Section0 = () => {
+const Section0 = ({ userIDs, setUserIDs }) => {
   const navigate = useNavigate(); // navigate 훅 사용
 
   const [infoList, setInfoList] = useState([]);
@@ -46,16 +44,20 @@ const Section0 = () => {
     setEditIndex(-1);
   };
 
-  const handleEnroll = (event) => {
+  const handleEnroll = () => {
     const confirmation = window.confirm('등록하시겠습니까?');
     if(confirmation){
       const did = infoList.map((info) => info.info0);
       const uid = infoList.map((info) => info.info1);
+      setUserIDs(uid);
+      // console.log('userIDs:', userIDs); // 현재 userIDs 값 출력
+
       const name = infoList.map((info) => info.info2);
+      // console.log(did, uid, name)
 
       const data = { did, uid, name };
-
-      axios.post('/api/enroll', data)
+      axios.post("/Home1", data, { headers: { "Content-Type": "application/json" } })
+      // axios.post("/Home1", data)
         .then((response) => {
           // 등록 후 작업 수행
           alert("데이터가 등록되었습니다.");
@@ -71,8 +73,6 @@ const Section0 = () => {
       alert("해당 정보를 모두 저장해주세요");
     }
   };
-
-  
 
   const handleEdit = (index) => {
     const { info0, info1, info2 } = infoList[index];
@@ -101,7 +101,6 @@ const Section0 = () => {
                 <input className="input-field" placeholder='User Name' type="text" value={info2} onChange={handleInfo2Change} />
                 <button onClick={handleSave} className="save-button">{editIndex !== -1 ? 'Update' : 'Save'}</button>
                 <button onClick={handleEnroll} className="enroll-button">{editIndex !== -1 ? 'Enroll' : 'Enroll'}</button>
-                {/* <a className="top" href="http://localhost:3000/Home2"><FaHome />HOME</a> */}
             </div>
         </div>
       <ul className="info-list">

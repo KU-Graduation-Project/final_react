@@ -21,6 +21,8 @@ import Home2 from "./Components/Home2";
 
 
 function App() {
+  const [userIDs, setUserIDs] = useState([]);
+
     return (
       <div>
         <BrowserRouter>
@@ -28,9 +30,9 @@ function App() {
             <Route path={"/"} element={<Home1 />} />
             <Route path={"/Home2"} element={<Home2 />} />
             <Route path="/Nav" element={<Nav />} />
-            <Route path="/Section0" element={<Section0 />} />
+            <Route path="/Section0" element={<Section0 userIDs={userIDs} setUserIDs={setUserIDs} />} />
             <Route path="/Section1" element={<Section1 />} />
-            <Route path="/Section2" element={<Section2 />} />
+            <Route path="/Section2" element={<Section2 userIDs={userIDs} />} /> 
             <Route path="/Section3" element={<Section3 />} />
             <Route path="/Section4" element={<Section4 />} />
             <Route path="/Detail1" element={<Detail1 />} />

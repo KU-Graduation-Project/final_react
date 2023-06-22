@@ -53,16 +53,6 @@ const Detail = () => {
         setRp(prev => ([...prev, rp]))
         setTp(prev => ([...prev, tp]))
       }
-      // if (parse_data.user === 'user1'){
-      //   setHr(prev => ([...prev, hr]))
-      //   setRp(prev => ([...prev, rp]))
-      //   setTp(prev => ([...prev, tp]))
-      // }
-      // setMessage(event.data);
-      
-      // let ur = parse_data.user
-      // let rp = parse_data.resp
-      // let tp = parse_data.temp
     };
 
     return () => {

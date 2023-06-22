@@ -1,17 +1,20 @@
 const express = require('express');
 const mysql = require('mysql');
 const WebSocket = require('ws');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 const wss = new WebSocket.Server({ port: 8080 });
 
 let data = '';
 
-wss.on('connection', ws => {
-  ws.on("message", function message(data, isBinary) {
-    const msg = isBinary ? data : data.toString();
-    console.log("msg" + msg + "\n\n");
 
+wss.on('connection', (ws) => {
+  console.log("socket open");
+  ws.on('message', (message) => {
+    //const msg = isBinary ? data : data.toString();
+    const msg = message
+    console.log("msg" + msg + "\n\n");
     console.log("receive from client: ", msg);
     ws.send("send to client: echo " + msg);
 
@@ -36,25 +39,26 @@ const connection = mysql.createConnection({
 });
 
 connection.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to the MySQL database');
+  if (err) {
+    console.error('Failed to connect to MySQL database', err);
+    // 여기서 res 객체를 사용할 수 없음
+  } else {
+    connection.query('DROP TABLE if exists user');
+    connection.query('CREATE TABLE user(did VARCHAR(45), uid VARCHAR(45), name VARCHAR(45))');
+    console.log('Connected to the MySQL database');
+  }
 });
 
-connection.on('close', () => {
-  const deleteQuery = 'DELETE FROM user';
-
-  connection.query(deleteQuery, (err, result) => {
-    if (err) {
-      console.error('Error deleting data from MySQL database', err);
-    } else {
-      console.log('Data deleted from MySQL database');
-    }
-  });
-});
-
+// post 요청 시 값을 객체로 바꿔줌
 app.use(express.json());
+app.use(express.static('public'));
 
-app.post('/api/enroll', (req, res) => {
+app.get('/', (req, res) => {
+  res.redirect('/Home1');
+});
+
+
+app.post('/Home1', (req, res) => {
   const { did, uid, name } = req.body;
 
   const values = did.map((_, index) => [did[index], uid[index], name[index]]);
@@ -69,10 +73,6 @@ app.post('/api/enroll', (req, res) => {
       res.status(200).json({ success: true });
     }
   });
-});
-
-app.get('/Home2', (req, res) => {
-  res.send('Welcome to the home page');
 });
 
 // 서버 시작
