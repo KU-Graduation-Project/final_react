@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import "./App.css";
 import Nav from "./Components/nav/Nav";
 import Section0 from "./Components/section0/Section0";
@@ -22,12 +22,12 @@ import Home2 from "./Components/Home2";
 
 function App() {
   const [userIDs, setUserIDs] = useState([]);
-
     return (
       <div>
         <BrowserRouter>
           <Routes>
             <Route path={"/"} element={<Home1 />} />
+            <Route path="/Home1" element={<Home1 />} />
             <Route path={"/Home2"} element={<Home2 />} />
             <Route path="/Nav" element={<Nav />} />
             <Route path="/Section0" element={<Section0 userIDs={userIDs} setUserIDs={setUserIDs} />} />

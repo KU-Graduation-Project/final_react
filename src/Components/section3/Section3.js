@@ -1,3 +1,5 @@
+// 좌측 Nav : CONTACT
+
 import React from "react";
 import Nav from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Components/nav/Nav';
 import { FaHome } from 'react-icons/fa';
@@ -31,12 +33,6 @@ const Section3 = () => {
 					<h3 className="foot">Ocean Lab</h3>
 					<h3 className="foot">2023 by KCG_Ocean Lab</h3>
 			</footer>
-			{/* <footer class="sns-pictogram">
-				<a href='http://www.konkuk.ac.kr/do/Index.do'><i class="fa-brands fa-instagram fa-4x"></i></a>
-				<a href="https://cafe.naver.com/maritimesmartcloth"><i class="fa-solid fa-blog fa-4x"></i></a>
-				<a href="https://github.com/KU-Graduation-Project"><i class="fa-brands fa-github fa-4x"></i></a>
-				<br/>
-			</footer> */}
 			<br/>
 			</div>
         </div>

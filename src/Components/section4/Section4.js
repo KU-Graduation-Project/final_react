@@ -1,3 +1,5 @@
+// 좌측 Nav : INFORMATION
+
 import React from "react";
 import url from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Images/url.png';
 import Nav from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Components/nav/Nav';
