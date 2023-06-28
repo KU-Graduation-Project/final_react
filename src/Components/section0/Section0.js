@@ -59,7 +59,7 @@ const Section0 = () => {
       // DB서버에 전송할 데이터
       const data = { did, uid, name };
       // 서버에 데이터 전송 및 처리
-      axios.post("/Home1", data, { headers: { "Content-Type": "application/json" } })
+      axios.post("http://localhost:3333/data", data, { headers: { "Content-Type": "application/json" } })
       // axios.post("/Home1", data)
         .then((response) => {
           // 등록 후 작업 수행
@@ -69,7 +69,7 @@ const Section0 = () => {
           navigate("/Home2", { state: { userIDs } }); // userIDs 값을 전달
         })
         .catch((error) => {
-          console.error('Error while enrolling data', error); // 에러 처리
+          console.log('Error while enrolling data', error); // 에러 처리
         });
     }                          
     else{

@@ -8,9 +8,9 @@ import {Link} from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import ReactDOM from 'react-dom'
 import { FaHome, FaChild, FaHeartbeat, FaWind, FaTemperatureHigh } from 'react-icons/fa';
-import fall from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Images/fall.png';
-import run from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Images/run.png';
-import stand from 'C:/Users/user/Downloads/hpe-modify/hpe-example-main/my-app/src/Images/stand.png';
+import fall from './fall.png';
+import run from './run.png';
+import stand from './stand.png';
 import { useLocation } from 'react-router-dom'; // useLocation 사용
 
 const Section2 = () => {
@@ -52,11 +52,15 @@ const Section2 = () => {
     }
 
     const changeImageSrc2=(did, action)=>{
+      //did 고정이라고 가정(1, 2, 3 ...)
       if (did === '1') {
+        // 행위가 -3인 경우 "낙상"이라고 가정
         if (action === '-3') {
           setImageSrc1(fall)
+        // 행위가 -2인 경우 "뛰기"라고 가정
         }else if (action === '-2') {
           setImageSrc1(run)
+        // 그 외인 경우 "서있기"라고 가정
         }else{
           setImageSrc1(stand)
         }

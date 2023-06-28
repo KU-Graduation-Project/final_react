@@ -44,6 +44,7 @@ function App() {
             <Route path="/Detail7" element={<Detail7 />} />
             <Route path="/Detail8" element={<Detail8 />} />
             <Route path="/Detail9" element={<Detail9 />} />
+            <Route path={"*"} element={<Home2/>} />
           </Routes>
         </BrowserRouter>
     </div>
