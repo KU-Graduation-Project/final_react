@@ -216,6 +216,7 @@ const Detail = () => {
 
   return (
     <div className="detail">
+      {/* 센서값 전체 찍기 임의로 찍는 중 */}
       <p>{message}</p>
       <h3 className="back">
         <Link to={"/Home2"}>
