@@ -42,10 +42,13 @@ const Section2 = () => {
 
   // 이미지 변경 함수
     const changeImageSrc=(action)=>{
+      // 행위가 -3인 경우 "낙상"이라고 가정
       if(action==='-3'){ //fall
         setImageSrc(fall);
+      // 행위가 -2인 경우 "뛰기"라고 가정
       }else if(action==="-2"){ //run
         setImageSrc(run);
+      // 그 외인 경우 "서있기"라고 가정
       }else{ //stand
         setImageSrc(stand);
       }
@@ -195,7 +198,7 @@ const Section2 = () => {
               <div className="square">
               <Link to={"/Detail1"}>
                   <div id="data" className="click">#1&nbsp;&nbsp;{userIDs[0]}</div>
-                  <img id="action" className="pic" src={imageSrc} height="45px"/>
+                  <img id="action" className="pic" src={imageSrc1} height="45px"/>
                   <div id="hr"><FaHeartbeat/> : {user1.hr} </div>
                   <div id="rp"><FaWind/> : {user1.rp} </div>
                   <div id="tp"><FaTemperatureHigh/> : {user1.tp} </div>
