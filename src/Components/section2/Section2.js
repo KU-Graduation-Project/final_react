@@ -191,6 +191,7 @@ const Section2 = () => {
     
     return (
       <div className="section">
+        {/* 센서값 전체 찍기 임의로 찍는 중 */}
           <p>{message}</p>
           <div className="experience">
               <div>
