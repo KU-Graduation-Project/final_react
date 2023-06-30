@@ -17,7 +17,7 @@ wss.on("connection", (ws) => {
   ws.on("message", (message) => {
     //const msg = isBinary ? data : data.toString();
     const msg = message;
-    console.log("msg" + msg + "\n\n");
+    console.log(msg + "\n\n");
     console.log("receive from client: ", msg);
     ws.send("send to client: echo " + msg);
 
